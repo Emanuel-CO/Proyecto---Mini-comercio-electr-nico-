@@ -1,0 +1,6 @@
+{
+  "name": "Mercado Trust",
+  "description": "Plataforma de comercio local en Colombia con vitrina en tiempo real, checkout transaccional ACID en 4 pasos, comprobante digital y panel administrativo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
