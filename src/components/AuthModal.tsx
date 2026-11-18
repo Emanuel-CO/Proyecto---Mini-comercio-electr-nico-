@@ -109,17 +109,17 @@ export function AuthPanel({
 
       <div className={embedded ? '' : 'p-6'}>
         {/* Segmented mode switch */}
-        <div className="grid grid-cols-2 gap-1 p-1 bg-[#F1F5F9] rounded-lg mb-5">
+        <div className="grid grid-cols-2 gap-1.5 p-1.5 bg-[#f2f4f5] rounded-xl mb-5 border border-[#ebebeb]">
           <button
             type="button"
             onClick={() => {
               setMode('login');
               setError(null);
             }}
-            className={`py-2 text-xs font-semibold rounded-md transition-colors cursor-pointer ${
+            className={`py-2.5 text-sm font-bold rounded-lg transition-all cursor-pointer ${
               mode === 'login'
-                ? 'bg-white text-[#0F172A] shadow-sm'
-                : 'text-[#475569] hover:text-[#0F172A]'
+                ? 'bg-white text-[#5433eb] shadow-sm border border-[#ebebeb]'
+                : 'text-[#787574] hover:text-[#000000]'
             }`}
           >
             Iniciar sesión
@@ -130,10 +130,10 @@ export function AuthPanel({
               setMode('register');
               setError(null);
             }}
-            className={`py-2 text-xs font-semibold rounded-md transition-colors cursor-pointer ${
+            className={`py-2.5 text-sm font-bold rounded-lg transition-all cursor-pointer ${
               mode === 'register'
-                ? 'bg-white text-[#0F172A] shadow-sm'
-                : 'text-[#475569] hover:text-[#0F172A]'
+                ? 'bg-white text-[#5433eb] shadow-sm border border-[#ebebeb]'
+                : 'text-[#787574] hover:text-[#000000]'
             }`}
           >
             Registrarme
@@ -261,9 +261,9 @@ export function AuthPanel({
           <button
             type="submit"
             disabled={loading}
-            className="w-full h-11 rounded-lg bg-[#059669] hover:bg-[#047857] disabled:opacity-60 text-white text-sm font-semibold inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            className="w-full h-13 rounded-xl bg-[#5433eb] hover:bg-[#4524db] disabled:opacity-60 text-white text-base font-bold inline-flex items-center justify-center gap-2.5 shadow-md hover:shadow-lg active:scale-[0.99] transition-all cursor-pointer"
           >
-            {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+            {loading && <Loader2 className="w-5 h-5 animate-spin" />}
             <span>
               {mode === 'login' ? 'Ingresar a mi cuenta' : 'Crear cuenta y continuar'}
             </span>

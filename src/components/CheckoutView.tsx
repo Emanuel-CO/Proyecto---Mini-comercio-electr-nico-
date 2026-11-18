@@ -85,7 +85,7 @@ export function CheckoutView({
           <button
             type="button"
             onClick={onBackToCatalog}
-            className="px-5 py-2.5 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold cursor-pointer"
+            className="h-12 px-6 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-base font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
           >
             Ir al catálogo
           </button>
@@ -254,17 +254,17 @@ export function CheckoutView({
                     </div>
 
                     <div className="flex items-center justify-between sm:justify-end gap-4">
-                      <div className="inline-flex items-center border border-[#CBD5E1] rounded-lg">
+                      <div className="inline-flex items-center border border-[#ebebeb] rounded-xl bg-white shadow-xs">
                         <button
                           type="button"
                           onClick={() =>
                             onUpdateQty(item.productoId, item.cantidadSolicitada - 1)
                           }
-                          className="w-9 h-9 flex items-center justify-center hover:bg-[#F1F5F9] rounded-l-lg cursor-pointer"
+                          className="w-10 h-10 flex items-center justify-center hover:bg-[#f2f4f5] rounded-l-xl cursor-pointer text-sm font-bold transition-colors"
                         >
                           <Minus className="w-3.5 h-3.5" />
                         </button>
-                        <span className="w-9 text-center text-xs font-bold tabular-nums">
+                        <span className="w-10 text-center text-sm font-extrabold tabular-nums">
                           {item.cantidadSolicitada}
                         </span>
                         <button
@@ -272,20 +272,20 @@ export function CheckoutView({
                           onClick={() =>
                             onUpdateQty(item.productoId, item.cantidadSolicitada + 1)
                           }
-                          className="w-9 h-9 flex items-center justify-center hover:bg-[#F1F5F9] rounded-r-lg cursor-pointer"
+                          className="w-10 h-10 flex items-center justify-center hover:bg-[#f2f4f5] rounded-r-xl cursor-pointer text-sm font-bold transition-colors"
                         >
                           <Plus className="w-3.5 h-3.5" />
                         </button>
                       </div>
 
-                      <span className="text-sm font-bold text-[#0F172A] tabular-nums min-w-[100px] text-right">
+                      <span className="text-base font-extrabold text-[#332f2d] tabular-nums min-w-[110px] text-right">
                         {formatCOP(item.subtotalLinea)}
                       </span>
 
                       <button
                         type="button"
                         onClick={() => onRemoveItem(item.productoId)}
-                        className="p-2 text-[#94A3B8] hover:text-[#BA1A1A] cursor-pointer"
+                        className="p-2 text-[#787574] hover:text-[#BA1A1A] hover:bg-red-50 rounded-lg cursor-pointer transition-colors"
                         aria-label="Eliminar producto"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -295,7 +295,7 @@ export function CheckoutView({
                 ))}
               </div>
 
-              <div className="pt-4 flex justify-end">
+              <div className="pt-6 flex justify-end">
                 <button
                   type="button"
                   disabled={calculation.tieneProblemasStock}
@@ -303,10 +303,10 @@ export function CheckoutView({
                     setError(null);
                     setStep(2);
                   }}
-                  className="h-11 px-6 rounded-lg bg-[#059669] hover:bg-[#047857] disabled:bg-[#CBD5E1] text-white text-sm font-semibold inline-flex items-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto h-13 px-8 rounded-xl bg-[#5433eb] hover:bg-[#4524db] disabled:bg-[#ebebeb] disabled:text-[#acb0aa] disabled:cursor-not-allowed text-white text-base font-bold inline-flex items-center justify-center gap-2.5 shadow-md hover:shadow-lg active:scale-[0.99] transition-all cursor-pointer"
                 >
                   <span>Continuar a Datos y Envío</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -383,11 +383,11 @@ export function CheckoutView({
                     />
                   </div>
 
-                  <div className="pt-4 flex items-center justify-between gap-3">
+                  <div className="pt-6 flex items-center justify-between gap-4">
                     <button
                       type="button"
                       onClick={() => setStep(1)}
-                      className="h-11 px-4 rounded-lg border border-[#E2E8F0] text-sm font-semibold text-[#0F172A] hover:bg-[#F1F5F9] cursor-pointer"
+                      className="h-12 px-6 rounded-xl border border-[#ebebeb] text-sm sm:text-base font-bold text-[#332f2d] hover:bg-[#f2f4f5] transition-all cursor-pointer"
                     >
                       Volver
                     </button>
@@ -403,10 +403,10 @@ export function CheckoutView({
                         setError(null);
                         setStep(3);
                       }}
-                      className="h-11 px-6 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold inline-flex items-center gap-2 cursor-pointer"
+                      className="h-13 px-8 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-base font-bold inline-flex items-center justify-center gap-2.5 shadow-md hover:shadow-lg active:scale-[0.99] transition-all cursor-pointer"
                     >
                       <span>Continuar al Pago</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
@@ -483,21 +483,21 @@ export function CheckoutView({
                 })}
               </div>
 
-              <div className="pt-4 flex items-center justify-between gap-3">
+              <div className="pt-6 flex items-center justify-between gap-4">
                 <button
                   type="button"
                   onClick={() => setStep(2)}
-                  className="h-11 px-4 rounded-lg border border-[#E2E8F0] text-sm font-semibold text-[#0F172A] hover:bg-[#F1F5F9] cursor-pointer"
+                  className="h-12 px-6 rounded-xl border border-[#ebebeb] text-sm sm:text-base font-bold text-[#332f2d] hover:bg-[#f2f4f5] transition-all cursor-pointer"
                 >
                   Volver
                 </button>
                 <button
                   type="button"
                   onClick={() => setStep(4)}
-                  className="h-11 px-6 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold inline-flex items-center gap-2 cursor-pointer"
+                  className="h-13 px-8 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-base font-bold inline-flex items-center justify-center gap-2.5 shadow-md hover:shadow-lg active:scale-[0.99] transition-all cursor-pointer"
                 >
                   <span>Revisar confirmación</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -544,12 +544,12 @@ export function CheckoutView({
                 </div>
               </div>
 
-              <div className="pt-4 flex items-center justify-between gap-3">
+              <div className="pt-6 flex items-center justify-between gap-4">
                 <button
                   type="button"
                   disabled={submitting}
                   onClick={() => setStep(3)}
-                  className="h-11 px-4 rounded-lg border border-[#E2E8F0] text-sm font-semibold text-[#0F172A] hover:bg-[#F1F5F9] cursor-pointer"
+                  className="h-12 px-6 rounded-xl border border-[#ebebeb] text-sm sm:text-base font-bold text-[#332f2d] hover:bg-[#f2f4f5] transition-all cursor-pointer"
                 >
                   Cambiar pago
                 </button>
@@ -557,12 +557,12 @@ export function CheckoutView({
                   type="button"
                   disabled={submitting}
                   onClick={handleConfirmOrder}
-                  className="h-11 px-7 rounded-lg bg-[#059669] hover:bg-[#047857] disabled:opacity-60 text-white text-sm font-semibold inline-flex items-center gap-2 cursor-pointer"
+                  className="h-14 px-9 rounded-xl bg-[#5433eb] hover:bg-[#4524db] disabled:opacity-60 text-white text-base sm:text-lg font-bold inline-flex items-center justify-center gap-2.5 shadow-lg hover:shadow-xl active:scale-[0.99] transition-all cursor-pointer"
                 >
                   {submitting ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-5 h-5 animate-spin" />
                   ) : (
-                    <Lock className="w-4 h-4" />
+                    <Lock className="w-5 h-5" />
                   )}
                   <span>
                     {submitting

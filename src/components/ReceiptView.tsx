@@ -28,7 +28,7 @@ export function ReceiptView({
         <button
           type="button"
           onClick={onBackToCatalog}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#475569] hover:text-[#0F172A] cursor-pointer"
+          className="inline-flex items-center gap-2 h-10 px-3.5 rounded-lg text-sm font-bold text-[#787574] hover:text-[#000000] hover:bg-slate-100 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           Volver al catálogo
@@ -39,7 +39,7 @@ export function ReceiptView({
             <button
               type="button"
               onClick={onGoToOrders}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-[#E2E8F0] bg-white hover:bg-[#F1F5F9] text-sm font-semibold text-[#0F172A] cursor-pointer"
+              className="inline-flex items-center gap-2 h-11 px-5 rounded-xl border border-[#ebebeb] bg-white hover:bg-[#f2f4f5] text-sm font-bold text-[#332f2d] shadow-xs transition-all cursor-pointer"
             >
               <ClipboardList className="w-4 h-4" />
               Mis pedidos
@@ -48,7 +48,7 @@ export function ReceiptView({
           <button
             type="button"
             onClick={() => window.print()}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#0F172A] hover:bg-[#1E293B] text-white text-sm font-semibold cursor-pointer"
+            className="inline-flex items-center gap-2.5 h-11 px-5 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
           >
             <Printer className="w-4 h-4" />
             Imprimir / Exportar PDF

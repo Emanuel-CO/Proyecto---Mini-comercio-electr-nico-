@@ -94,7 +94,7 @@ export function CartDrawer({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-5 py-2.5 rounded-lg bg-[#0F172A] hover:bg-[#1E293B] text-white text-sm font-semibold cursor-pointer"
+                className="h-12 px-6 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-base font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
                 Volver al catálogo
               </button>
@@ -121,35 +121,35 @@ export function CartDrawer({
                       type="button"
                       onClick={() => onRemoveItem(item.productoId)}
                       aria-label={`Quitar ${item.nombre}`}
-                      className="text-[#94A3B8] hover:text-[#BA1A1A] p-1 cursor-pointer"
+                      className="text-[#787574] hover:text-[#BA1A1A] hover:bg-red-50 p-1.5 rounded-lg transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
 
-                  <p className="text-xs text-[#64748B] tabular-nums mt-0.5">
+                  <p className="text-xs text-[#787574] tabular-nums mt-0.5">
                     {formatCOP(item.precioUnitario)} c/u · Disp: {item.stockDisponible}
                   </p>
 
                   {item.advertencia && (
-                    <p className="text-xs font-medium text-[#92400E] bg-[#FEF3C7] border border-[#FDE68A] px-2 py-1 rounded mt-1.5">
+                    <p className="text-xs font-semibold text-[#92400E] bg-[#FEF3C7] border border-[#FDE68A] px-2.5 py-1 rounded-lg mt-1.5">
                       {item.advertencia}
                     </p>
                   )}
 
-                  <div className="mt-2.5 flex items-center justify-between">
-                    <div className="inline-flex items-center border border-[#CBD5E1] rounded-lg">
+                  <div className="mt-3 flex items-center justify-between">
+                    <div className="inline-flex items-center border border-[#ebebeb] rounded-xl bg-white shadow-xs">
                       <button
                         type="button"
                         onClick={() =>
                           onUpdateQty(item.productoId, item.cantidadSolicitada - 1)
                         }
                         aria-label="Restar unidad"
-                        className="w-8 h-8 flex items-center justify-center text-[#0F172A] hover:bg-[#F1F5F9] rounded-l-lg cursor-pointer"
+                        className="w-10 h-10 flex items-center justify-center text-[#332f2d] hover:bg-[#f2f4f5] rounded-l-xl cursor-pointer text-sm font-bold transition-colors"
                       >
                         <Minus className="w-3.5 h-3.5" />
                       </button>
-                      <span className="w-8 text-center text-xs font-bold tabular-nums">
+                      <span className="w-10 text-center text-sm font-extrabold tabular-nums">
                         {item.cantidadSolicitada}
                       </span>
                       <button
@@ -158,13 +158,13 @@ export function CartDrawer({
                           onUpdateQty(item.productoId, item.cantidadSolicitada + 1)
                         }
                         aria-label="Sumar unidad"
-                        className="w-8 h-8 flex items-center justify-center text-[#0F172A] hover:bg-[#F1F5F9] rounded-r-lg cursor-pointer"
+                        className="w-10 h-10 flex items-center justify-center text-[#332f2d] hover:bg-[#f2f4f5] rounded-r-xl cursor-pointer text-sm font-bold transition-colors"
                       >
                         <Plus className="w-3.5 h-3.5" />
                       </button>
                     </div>
 
-                    <span className="text-sm font-bold text-[#0F172A] tabular-nums">
+                    <span className="text-base font-extrabold text-[#332f2d] tabular-nums">
                       {formatCOP(item.subtotalLinea)}
                     </span>
                   </div>
@@ -176,44 +176,44 @@ export function CartDrawer({
 
         {/* Footer de totales */}
         {!isEmpty && calculation && (
-          <div className="p-6 border-t border-[#E2E8F0] bg-[#F8FAFC] space-y-4">
+          <div className="p-6 border-t border-[#ebebeb] bg-[#f2f4f5] space-y-4">
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between text-[#475569]">
+              <div className="flex justify-between text-[#787574]">
                 <span>Subtotal</span>
-                <span className="tabular-nums font-medium text-[#0F172A]">
+                <span className="tabular-nums font-bold text-[#332f2d]">
                   {formatCOP(calculation.subtotal)}
                 </span>
               </div>
-              <div className="flex justify-between text-[#475569]">
+              <div className="flex justify-between text-[#787574]">
                 <span>Envío local</span>
-                <span className="tabular-nums font-medium text-[#0F172A]">
+                <span className="tabular-nums font-bold text-[#332f2d]">
                   {calculation.costoEnvio === 0
                     ? 'Gratis'
                     : formatCOP(calculation.costoEnvio)}
                 </span>
               </div>
-              <div className="pt-2 border-t border-[#E2E8F0] flex justify-between items-baseline">
-                <span className="font-bold text-[#0F172A]">Total estimado</span>
-                <span className="text-xl font-extrabold text-[#0F172A] tabular-nums">
+              <div className="pt-2 border-t border-[#ebebeb] flex justify-between items-baseline">
+                <span className="font-bold text-[#332f2d] text-base">Total estimado</span>
+                <span className="text-2xl font-black text-[#5433eb] tabular-nums">
                   {loading ? 'Calculando...' : formatCOP(calculation.total)}
                 </span>
               </div>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 pt-2">
               <button
                 type="button"
                 disabled={calculation.tieneProblemasStock || loading}
                 onClick={onProceedToCheckout}
-                className="w-full h-11 rounded-lg bg-[#059669] hover:bg-[#047857] disabled:bg-[#CBD5E1] disabled:cursor-not-allowed text-white text-sm font-semibold inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="w-full h-14 rounded-xl bg-[#5433eb] hover:bg-[#4524db] disabled:bg-[#ebebeb] disabled:text-[#acb0aa] disabled:cursor-not-allowed text-white text-base font-bold inline-flex items-center justify-center gap-2.5 transition-all shadow-md hover:shadow-lg active:scale-[0.99] cursor-pointer"
               >
                 <span>Proceder al Checkout</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5" />
               </button>
               <button
                 type="button"
                 onClick={onClearCart}
-                className="w-full py-2 text-xs font-semibold text-[#64748B] hover:text-[#BA1A1A] transition-colors cursor-pointer"
+                className="w-full py-2.5 text-sm font-bold text-[#787574] hover:text-[#BA1A1A] hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
               >
                 Vaciar carrito
               </button>

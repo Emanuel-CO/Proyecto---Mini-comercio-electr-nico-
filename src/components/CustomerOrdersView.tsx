@@ -92,7 +92,7 @@ export function CustomerOrdersView({
         <button
           type="button"
           onClick={onGoToCatalog}
-          className="px-4 py-2.5 rounded-lg border border-[#E2E8F0] bg-white hover:bg-[#F1F5F9] text-sm font-semibold text-[#0F172A] cursor-pointer"
+          className="h-11 px-5 rounded-xl border border-[#ebebeb] bg-white hover:bg-[#f2f4f5] text-sm font-bold text-[#332f2d] shadow-xs cursor-pointer transition-all"
         >
           Explorar catálogo
         </button>
@@ -137,7 +137,7 @@ export function CustomerOrdersView({
           <button
             type="button"
             onClick={onGoToCatalog}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold cursor-pointer"
+            className="inline-flex items-center gap-2.5 h-12 px-6 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-base font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
           >
             <ShoppingBag className="w-4 h-4" />
             Ir al catálogo
@@ -200,28 +200,28 @@ export function CustomerOrdersView({
                     Entrega: {order.direccionEntrega}
                   </span>
 
-                  <div className="flex flex-wrap items-center gap-2.5">
+                  <div className="flex flex-wrap items-center gap-3">
                     {canCancel && confirmCancelId !== order.id && (
                       <button
                         type="button"
                         onClick={() => setConfirmCancelId(order.id)}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-[#FECACA] bg-[#FEF2F2] hover:bg-[#FEE2E2] text-xs font-semibold text-[#991B1B] cursor-pointer"
+                        className="inline-flex items-center gap-1.5 h-10 px-4 rounded-xl border border-[#FECACA] bg-[#FEF2F2] hover:bg-[#FEE2E2] text-sm font-bold text-[#991B1B] cursor-pointer transition-colors"
                       >
-                        <RotateCcw className="w-3.5 h-3.5" />
+                        <RotateCcw className="w-4 h-4" />
                         Cancelar pedido
                       </button>
                     )}
 
                     {canCancel && confirmCancelId === order.id && (
-                      <div className="flex items-center gap-2 bg-[#FEF2F2] border border-[#FECACA] px-3 py-1.5 rounded-lg">
-                        <span className="text-xs font-medium text-[#991B1B]">
+                      <div className="flex items-center gap-2 bg-[#FEF2F2] border border-[#FECACA] px-3.5 py-2 rounded-xl">
+                        <span className="text-sm font-bold text-[#991B1B]">
                           ¿Confirmar cancelación?
                         </span>
                         <button
                           type="button"
                           disabled={cancellingId === order.id}
                           onClick={() => handleCancelOrder(order.id)}
-                          className="px-2.5 py-1 rounded bg-[#BA1A1A] text-white text-xs font-semibold inline-flex items-center gap-1 cursor-pointer"
+                          className="h-8 px-3 rounded-lg bg-[#BA1A1A] hover:bg-[#991B1B] text-white text-xs font-bold inline-flex items-center gap-1 cursor-pointer transition-colors"
                         >
                           {cancellingId === order.id && (
                             <Loader2 className="w-3 h-3 animate-spin" />
@@ -231,7 +231,7 @@ export function CustomerOrdersView({
                         <button
                           type="button"
                           onClick={() => setConfirmCancelId(null)}
-                          className="px-2 py-1 text-xs font-semibold text-[#475569] cursor-pointer"
+                          className="h-8 px-3 rounded-lg text-xs font-bold text-[#787574] hover:bg-white cursor-pointer transition-colors"
                         >
                           No
                         </button>
@@ -241,9 +241,9 @@ export function CustomerOrdersView({
                     <button
                       type="button"
                       onClick={() => onViewReceipt(order)}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#0F172A] hover:bg-[#1E293B] text-white text-xs font-semibold cursor-pointer"
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-[#332f2d] hover:bg-[#000000] text-white text-sm font-bold shadow-xs cursor-pointer transition-colors"
                     >
-                      <FileText className="w-3.5 h-3.5" />
+                      <FileText className="w-4 h-4" />
                       Ver comprobante
                     </button>
                   </div>

@@ -101,10 +101,10 @@ export function StorefrontView({
             <p className="text-[15px] sm:text-base text-[#475569] leading-relaxed max-w-xl mb-7">
               Explora productos seleccionados de origen huilense, tecnología y diseño cotidiano. Verifica disponibilidad al instante y finaliza tu pedido en 4 pasos con comprobante digital inmediato.
             </p>
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-4">
               <a
                 href="#catalogo-vitrina"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold whitespace-nowrap transition-colors"
+                className="inline-flex items-center gap-2.5 h-12 px-6 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-base font-bold whitespace-nowrap transition-all shadow-md hover:shadow-lg active:scale-[0.98]"
               >
                 <span>Explorar catálogo</span>
                 <ArrowRight className="w-4 h-4" />
@@ -112,7 +112,7 @@ export function StorefrontView({
               <button
                 type="button"
                 onClick={onGoToOrders}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-[#E2E8F0] bg-white hover:bg-[#F1F5F9] text-[#0F172A] text-sm font-semibold whitespace-nowrap transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 h-12 px-6 rounded-xl border border-[#ebebeb] bg-white hover:bg-[#f2f4f5] text-[#332f2d] text-base font-bold whitespace-nowrap transition-all shadow-xs hover:shadow-sm cursor-pointer"
               >
                 <span>Consultar mis pedidos</span>
               </button>
@@ -193,15 +193,15 @@ export function StorefrontView({
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
-            <div className="relative flex-1 sm:w-72">
-              <Search className="w-4 h-4 text-[#64748B] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <div className="relative flex-1 sm:w-80">
+              <Search className="w-4 h-4 text-[#787574] absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="search"
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 placeholder="Buscar por nombre, SKU o categoría..."
                 aria-label="Buscar productos"
-                className="w-full h-11 pl-10 pr-3.5 rounded-lg border border-[#CBD5E1] bg-white text-sm text-[#0F172A] focus:outline-none focus:border-[#059669] focus:ring-3 focus:ring-[#059669]/15"
+                className="w-full h-12 pl-11 pr-4 rounded-xl border border-[#ebebeb] bg-white text-base text-[#332f2d] focus:outline-none focus:border-[#5433eb] focus:ring-3 focus:ring-[#5433eb]/15 transition-all"
               />
             </div>
 
@@ -209,7 +209,7 @@ export function StorefrontView({
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}
               aria-label="Ordenar productos"
-              className="h-11 px-3.5 rounded-lg border border-[#CBD5E1] bg-white text-sm font-medium text-[#0F172A] focus:outline-none focus:border-[#059669] focus:ring-3 focus:ring-[#059669]/15 cursor-pointer"
+              className="h-12 px-4 rounded-xl border border-[#ebebeb] bg-white text-sm sm:text-base font-semibold text-[#332f2d] focus:outline-none focus:border-[#5433eb] focus:ring-3 focus:ring-[#5433eb]/15 cursor-pointer transition-all"
             >
               <option value="relevancia">Orden: Destacados</option>
               <option value="precio_asc">Precio: Menor a mayor</option>
@@ -223,17 +223,17 @@ export function StorefrontView({
         <div
           role="tablist"
           aria-label="Filtrar por categoría"
-          className="flex items-center gap-1.5 p-1.5 bg-[#F1F5F9] rounded-lg overflow-x-auto"
+          className="flex items-center gap-2 p-1.5 bg-[#f2f4f5] rounded-xl overflow-x-auto border border-[#ebebeb]"
         >
           <button
             type="button"
             role="tab"
             aria-selected={selectedCategoryId === null}
             onClick={() => onCategoryChange(null)}
-            className={`px-3.5 py-2 rounded-md text-xs font-semibold whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
+            className={`h-11 px-5 rounded-lg text-sm sm:text-[15px] font-bold whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               selectedCategoryId === null
-                ? 'bg-white text-[#0F172A] shadow-sm'
-                : 'text-[#475569] hover:text-[#0F172A]'
+                ? 'bg-white text-[#5433eb] shadow-sm border border-[#ebebeb]'
+                : 'text-[#787574] hover:text-[#000000] hover:bg-white/50'
             }`}
           >
             Todas las categorías
@@ -245,10 +245,10 @@ export function StorefrontView({
               role="tab"
               aria-selected={selectedCategoryId === cat.id}
               onClick={() => onCategoryChange(cat.id)}
-              className={`px-3.5 py-2 rounded-md text-xs font-semibold whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
+              className={`h-11 px-5 rounded-lg text-sm sm:text-[15px] font-bold whitespace-nowrap shrink-0 transition-all cursor-pointer ${
                 selectedCategoryId === cat.id
-                  ? 'bg-white text-[#0F172A] shadow-sm'
-                  : 'text-[#475569] hover:text-[#0F172A]'
+                  ? 'bg-white text-[#5433eb] shadow-sm border border-[#ebebeb]'
+                  : 'text-[#787574] hover:text-[#000000] hover:bg-white/50'
               }`}
             >
               {cat.nombre}
@@ -333,13 +333,13 @@ export function StorefrontView({
                       {product.descripcion}
                     </p>
 
-                    <div className="mt-5 pt-4 border-t border-[#E2E8F0] flex items-center justify-between gap-3">
+                    <div className="mt-5 pt-4 border-t border-[#ebebeb] flex items-center justify-between gap-3">
                       <div>
-                        <span className="block text-xs text-[#64748B]">Precio</span>
-                        <span className="text-lg font-bold text-[#0F172A] tabular-nums">
+                        <span className="block text-xs font-semibold text-[#787574]">Precio</span>
+                        <span className="text-xl font-extrabold text-[#332f2d] tabular-nums tracking-tight">
                           {formatCOP(product.precio, false)}
                         </span>
-                        <span className="text-xs font-semibold text-[#64748B] ml-1">
+                        <span className="text-xs font-bold text-[#787574] ml-1">
                           COP
                         </span>
                       </div>
@@ -348,10 +348,10 @@ export function StorefrontView({
                         type="button"
                         disabled={outOfStock}
                         onClick={() => onAddToCart(product, 1)}
-                        className={`h-11 px-4 rounded-lg text-sm font-semibold whitespace-nowrap shrink-0 transition-colors ${
+                        className={`h-12 px-5 rounded-xl text-sm sm:text-[15px] font-bold whitespace-nowrap shrink-0 transition-all shadow-sm hover:shadow-md active:scale-[0.98] ${
                           outOfStock
-                            ? 'bg-[#F1F5F9] text-[#94A3B8] border border-[#E2E8F0] cursor-not-allowed'
-                            : 'bg-[#059669] hover:bg-[#047857] text-white cursor-pointer'
+                            ? 'bg-[#f2f4f5] text-[#acb0aa] border border-[#ebebeb] cursor-not-allowed shadow-none'
+                            : 'bg-[#5433eb] hover:bg-[#4524db] text-white cursor-pointer'
                         }`}
                       >
                         {outOfStock
@@ -417,22 +417,22 @@ export function StorefrontView({
                   {selectedProduct.descripcion}
                 </p>
 
-                <div className="mt-6 pt-5 border-t border-[#E2E8F0] space-y-4">
+                <div className="mt-6 pt-5 border-t border-[#ebebeb] space-y-4">
                   {selectedProduct.stock > 0 && (
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-semibold text-[#0F172A]">
+                      <span className="text-sm font-bold text-[#332f2d]">
                         Cantidad
                       </span>
-                      <div className="inline-flex items-center border border-[#CBD5E1] rounded-lg">
+                      <div className="inline-flex items-center border border-[#ebebeb] rounded-xl bg-white shadow-xs">
                         <button
                           type="button"
                           onClick={() => setModalQty((q) => Math.max(1, q - 1))}
-                          className="w-10 h-10 flex items-center justify-center text-[#0F172A] hover:bg-[#F1F5F9] rounded-l-lg cursor-pointer"
+                          className="w-12 h-12 flex items-center justify-center text-[#332f2d] hover:bg-[#f2f4f5] rounded-l-xl cursor-pointer text-base font-bold transition-colors"
                           aria-label="Disminuir cantidad"
                         >
                           <Minus className="w-4 h-4" />
                         </button>
-                        <span className="w-10 text-center text-sm font-bold tabular-nums">
+                        <span className="w-12 text-center text-base font-extrabold tabular-nums">
                           {modalQty}
                         </span>
                         <button
@@ -442,7 +442,7 @@ export function StorefrontView({
                               Math.min(selectedProduct.stock, q + 1)
                             )
                           }
-                          className="w-10 h-10 flex items-center justify-center text-[#0F172A] hover:bg-[#F1F5F9] rounded-r-lg cursor-pointer"
+                          className="w-12 h-12 flex items-center justify-center text-[#332f2d] hover:bg-[#f2f4f5] rounded-r-xl cursor-pointer text-base font-bold transition-colors"
                           aria-label="Aumentar cantidad"
                         >
                           <Plus className="w-4 h-4" />
@@ -458,10 +458,10 @@ export function StorefrontView({
                       onAddToCart(selectedProduct, modalQty);
                       setSelectedProduct(null);
                     }}
-                    className={`w-full h-11 rounded-lg text-sm font-semibold transition-colors ${
+                    className={`w-full h-14 rounded-xl text-base sm:text-lg font-bold transition-all shadow-md hover:shadow-lg active:scale-[0.99] flex items-center justify-center gap-2 ${
                       selectedProduct.stock <= 0
-                        ? 'bg-[#F1F5F9] text-[#94A3B8] border border-[#E2E8F0] cursor-not-allowed'
-                        : 'bg-[#059669] hover:bg-[#047857] text-white cursor-pointer'
+                        ? 'bg-[#f2f4f5] text-[#acb0aa] border border-[#ebebeb] cursor-not-allowed shadow-none'
+                        : 'bg-[#5433eb] hover:bg-[#4524db] text-white cursor-pointer'
                     }`}
                   >
                     {selectedProduct.stock <= 0

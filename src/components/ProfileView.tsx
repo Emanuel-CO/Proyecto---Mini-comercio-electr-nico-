@@ -176,16 +176,16 @@ export function ProfileView({ user, onUpdated }: ProfileViewProps) {
           </div>
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex justify-end pt-2">
           <button
             type="submit"
             disabled={saving}
-            className="h-11 px-6 rounded-lg bg-[#059669] hover:bg-[#047857] disabled:opacity-60 text-white text-sm font-semibold inline-flex items-center gap-2 cursor-pointer"
+            className="h-13 px-8 rounded-xl bg-[#5433eb] hover:bg-[#4524db] disabled:opacity-60 text-white text-base font-bold inline-flex items-center gap-2.5 shadow-md hover:shadow-lg active:scale-[0.99] transition-all cursor-pointer"
           >
             {saving ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              <Save className="w-4 h-4" />
+              <Save className="w-5 h-5" />
             )}
             <span>Guardar cambios</span>
           </button>
