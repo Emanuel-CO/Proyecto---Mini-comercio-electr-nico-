@@ -31,18 +31,18 @@ export function Navbar({
   const linkClass = (active: boolean) =>
     `text-sm font-medium whitespace-nowrap shrink-0 transition-colors py-1 border-b-2 ${
       active
-        ? 'text-[#059669] border-[#059669]'
-        : 'text-[#475569] border-transparent hover:text-[#0F172A]'
+        ? 'text-[#5433eb] border-[#5433eb] font-semibold'
+        : 'text-[#787574] border-transparent hover:text-[#000000]'
     }`;
 
   return (
-    <header className="no-print sticky top-0 z-30 bg-white border-b border-[#E2E8F0]">
+    <header className="no-print sticky top-0 z-30 bg-white border-b border-[#ebebeb] shadow-sm">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-8">
         {/* Zona 1: Wordmark de marca */}
         <button
           type="button"
           onClick={() => onNavigate('storefront')}
-          className="text-lg font-extrabold tracking-tight text-[#0F172A] whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#059669] rounded"
+          className="text-lg font-extrabold tracking-tight text-[#000000] whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5433eb] rounded"
         >
           Mercado Trust
         </button>
@@ -119,7 +119,7 @@ export function Navbar({
           <button
             type="button"
             onClick={onOpenCart}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold whitespace-nowrap shrink-0 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#059669] focus-visible:ring-offset-2"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#5433eb] hover:bg-[#4524db] text-white text-sm font-semibold whitespace-nowrap shrink-0 transition-all shadow-sm hover:shadow-md cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5433eb] focus-visible:ring-offset-2"
           >
             <ShoppingBag className="w-4 h-4" strokeWidth={2} />
             <span>Carrito</span>
@@ -129,12 +129,12 @@ export function Navbar({
       </div>
 
       {/* Navegación móvil compacta */}
-      <div className="md:hidden border-t border-[#E2E8F0] px-4 py-2 flex items-center justify-between gap-4 overflow-x-auto bg-[#F8FAFC]">
+      <div className="md:hidden border-t border-[#ebebeb] px-4 py-2 flex items-center justify-between gap-4 overflow-x-auto bg-[#f2f4f5]">
         <button
           type="button"
           onClick={() => onNavigate('storefront')}
           className={`text-xs font-semibold whitespace-nowrap shrink-0 py-1 ${
-            route === 'storefront' ? 'text-[#059669]' : 'text-[#475569]'
+            route === 'storefront' ? 'text-[#5433eb]' : 'text-[#787574]'
           }`}
         >
           Catálogo
@@ -144,7 +144,7 @@ export function Navbar({
             type="button"
             onClick={() => onNavigate('admin')}
             className={`text-xs font-semibold whitespace-nowrap shrink-0 py-1 ${
-              route === 'admin' ? 'text-[#059669]' : 'text-[#475569]'
+              route === 'admin' ? 'text-[#5433eb]' : 'text-[#787574]'
             }`}
           >
             Panel Admin
@@ -154,7 +154,7 @@ export function Navbar({
             type="button"
             onClick={() => (user ? onNavigate('orders') : onOpenAuth('login'))}
             className={`text-xs font-semibold whitespace-nowrap shrink-0 py-1 ${
-              route === 'orders' ? 'text-[#059669]' : 'text-[#475569]'
+              route === 'orders' ? 'text-[#5433eb]' : 'text-[#787574]'
             }`}
           >
             Mis pedidos

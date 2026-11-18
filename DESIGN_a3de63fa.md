@@ -1,91 +1,68 @@
 # Sistema de Diseño Mercado Trust (DESIGN_a3de63fa.md)
 
-**Versión:** 1.0.0  
+**Versión:** 2.0.0  
 **Proyecto:** Mercado Trust — Comercio Local en Colombia  
 **Identificador de Diseño:** `DESIGN_a3de63fa`  
 **Hoja de Estilos Asociada:** `theme_66c899bc.css`  
 
 ---
 
-## 1. Filosofía de Marca y Principios de Diseño
+## 1. Tokens de Tema Globales (`@theme`)
 
-Mercado Trust es una plataforma de comercio local de alta confianza, diseñada con estándares fintech y de comercio electrónico moderno para Colombia. El lenguaje visual balancea solidez institucional y calidez comunitaria, priorizando:
+El sistema implementa una paleta de alta conversión y estética refinada inspirada en comercio digital de vanguardia (Shopify / Modern Commerce):
 
-1. **Claridad Transaccional:** Precios transparentes en Pesos Colombianos (`COP $`), cálculo de fletes en tiempo real y flujo de checkout en 4 pasos sin fricciones.
-2. **Confianza y Certeza Operativa:** Indicadores visuales claros de disponibilidad de stock (Disponible, Stock Crítico $\le 5$ unidades, Agotado) y comprobantes de compra verificables con trazabilidad.
-3. **Ergonomía Responsiva:** Experiencia optimizada para móviles (360px+) con áreas táctiles mínimas de 44px, selectores nativos accesibles y modales inferiores adaptables.
-4. **Minimalismo Utilitario:** Superficies limpias, contraste estructurado y jerarquía tipográfica sin ruido visual.
+### 1.1 Colores (`Colors`)
+```css
+--color-canvas-mist: #f2f4f5;      /* Fondo global de lienzo / canvas */
+--color-pure-white: #ffffff;       /* Fondo de tarjetas, paneles y navegación */
+--color-ink-black: #000000;        /* Contraste absoluto para textos destacados */
+--color-faint-border: #ebebeb;     /* Bordes sutiles y divisores estructurales */
+--color-muted-gray: #787574;       /* Textos secundarios y metadatos */
+--color-cool-stone: #cccccc;       /* Controles inactivos y bordes secundarios */
+--color-warm-fog: #acb0aa;         /* Leyendas y estados deshabilitados */
+--color-shop-violet: #5433eb;      /* Color primario de conversión / CTAs */
+--color-violet-wash: #c0b5f3;      /* Contenedores de éxito, selecciones suaves */
+--color-slate-ink: #332f2d;        /* Color principal de lectura del cuerpo */
+--color-ash-veil: #665a54;         /* Subtítulos y etiquetas neutrales */
+```
 
----
+### 1.2 Tipografía (`Typography`)
+* **Familia Primaria:** `'Shopify Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
+* **Familia Técnica / Tabular:** `'GT Standard', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
+* **Escala Tipográfica:**
+  * Caption: `11px` (line-height: `1.33`)
+  * Body Small: `12px` (line-height: `1.33`)
+  * Body: `14px` (line-height: `1.33`)
+  * Body Large: `16px` (line-height: `1.33`)
 
-## 2. Paleta Cromática y Tokens Semánticos
+### 1.3 Espaciado (`Spacing`)
+`4px`, `6px`, `8px`, `10px`, `11px`, `12px`, `16px`, `20px`, `24px`, `32px`, `38px`, `40px`, `48px`, `64px`.
 
-### 2.1 Colores Principales (Brand & Core)
-* **Primario (Emerald - `#006948` / `#059669`):** Acciones de conversión primaria, botones de compra, badges de éxito y confirmación de stock.
-* **On-Primary (`#FFFFFF`):** Texto y elementos sobre superficies primarias.
-* **Contenedor Primario (`#00855d` / `#D1FAE5`):** Fondos de badges activos y fondos de selección suave.
-* **Secundario (Slate - `#0F172A`):** Títulos de máxima jerarquía, textos estructurados y controles administrativos.
-* **Terciario (Cobalt Blue - `#0051d5` / `#2563EB`):** Destacados informativos, métodos de pago electrónicos (Wompi, PSE) y enlaces contextuales.
+### 1.4 Radios de Borde (`Border Radius`)
+* `radius-md`: `4px`
+* `radius-lg`: `8px`
+* `radius-xl`: `11.4046px`
+* `radius-2xl`: `17.1064px`
+* `radius-2xl-2`: `20px`
+* `radius-2xl-3`: `22.8092px`
+* `radius-3xl`: `28px`
+* `radius-3xl-2`: `32px`
+* `radius-full`: `9999px`
 
-### 2.2 Estados de Alerta e Inventario
-* **Stock Disponible (`#059669` / `#D1FAE5`):** Producto listo para despacho inmediato.
-* **Stock Crítico (`#D97706` / `#FEF3C7`):** Alerta cuando el inventario es $\le 5$ unidades.
-* **Agotado / Error (`#DC2626` / `#FEE2E2`):** Sin disponibilidad o alerta destructiva.
-
-### 2.3 Superficies y Fondos
-* **Canvas Base (`#FFFFFF`):** Tarjetas de producto, modales y formularios.
-* **Fondo de Página (`#F8FAFC`):** Superficie neutra ultra-clara de descanso visual.
-* **Bordes y Delimitadores (`#E2E8F0` / `#CBD5E1`):** Líneas sutiles de estructura sin sobrecarga.
-
----
-
-## 3. Tipografía
-
-La familia tipográfica oficial es **Plus Jakarta Sans**, combinada con **JetBrains Mono** para cifras numéricas, códigos de orden e importes en moneda.
-
-| Token | Familia | Tamaño | Peso | Interlineado | Tracking | Aplicación |
-|---|---|---|---|---|---|---|
-| `display` | Plus Jakarta Sans | 36px | 800 (Extra Bold) | 44px | -0.02em | Hero banner y encabezados principales |
-| `headline-lg` | Plus Jakarta Sans | 28px | 700 (Bold) | 36px | -0.015em | Títulos de vistas principales |
-| `headline-md` | Plus Jakarta Sans | 20px | 700 (Bold) | 28px | -0.01em | Nombres de productos y secciones |
-| `headline-sm` | Plus Jakarta Sans | 16px | 600 (Semi Bold) | 24px | 0 | Subtítulos y modales |
-| `body-lg` | Plus Jakarta Sans | 16px | 400 (Regular) | 26px | 0 | Textos destacados y descripciones |
-| `body-md` | Plus Jakarta Sans | 14px | 400 (Regular) | 22px | 0 | Texto de interfaz estándar |
-| `body-sm` | Plus Jakarta Sans | 12px | 400 (Regular) | 18px | 0 | Notas al pie y leyendas |
-| `label-sm` | Plus Jakarta Sans | 11px | 700 (Bold) | 14px | +0.03em | Badges de stock (mayúsculas) |
-| `currency-lg` | Plus Jakarta Sans | 24px | 700 (Bold) | 32px | -0.02em | Precios principales (`tabular-nums`) |
-| `currency-md` | Plus Jakarta Sans | 16px | 700 (Bold) | 22px | -0.01em | Subtotales y líneas de pedido |
-
----
-
-## 4. Radios de Curvatura (Border Radius)
-
-* `rounded-sm`: `4px` (`0.25rem`) — Etiquetas pequeñas y chips mínimos.
-* `rounded-md`: `8px` (`0.5rem`) — **Valor estándar** para botones, inputs, selectores y tarjetas.
-* `rounded-lg`: `16px` (`1rem`) — Banners promocionales, contenedores de checkout y modales.
-* `rounded-full`: `9999px` — Badges de stock píldora y avatares.
+### 1.5 Sombras y Elevaciones (`Shadows`)
+* `shadow-sm`: `rgba(0, 0, 0, 0.06) 0px 2px 8px 0px`
+* `shadow-sm-2`: `rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px`
+* `shadow-lg`: `rgba(0, 0, 0, 0.12) 0px 4px 24px 0px`
+* `shadow-lg-2`: `rgba(69, 36, 219, 0.34) 0px 4px 24px 0px`
 
 ---
 
-## 5. Elevaciones y Sombras
+## 2. Aplicación Transversal en las Vistas ("Sitios Web")
 
-* **Nivel 0 (Plano):** Fondo de página `#F8FAFC`.
-* **Nivel 1 (Reposo):** Tarjetas de producto y contenedores: Borde `1px solid #E2E8F0` + sombra sutil `0 1px 3px rgba(15,23,42,0.05)`.
-* **Nivel 2 (Flotante / Hover):** Menús desplegables y tarjetas activas: `0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04)`.
-* **Nivel 3 (Modales y Drawers):** Modal de checkout, carrito lateral y comprobantes digitales: `0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.06)` sobre fondo atenuado (`rgba(15, 23, 42, 0.5)`).
-
----
-
-## 6. Componentes Clave
-
-1. **Botón Primario:** Fondo verde esmeralda (`#006948` / `#059669`), texto blanco, esquinas de 8px, hover `#047857`, foco accesible con ring exterior.
-2. **Botón Secundario:** Fondo pizarra oscura (`#0F172A`), texto blanco, esquinas de 8px.
-3. **Chips de Stock:**
-   * En stock: `#D1FAE5` con texto `#065F46` y borde `#A7F3D0`.
-   * Últimas unidades ($\le 5$): `#FEF3C7` con texto `#92400E` y borde `#FDE68A`.
-   * Agotado: `#FEE2E2` con texto `#991B1B` y borde `#FECACA`.
-4. **Checkout Transaccional en 4 Pasos:**
-   1. Carrito y revisión de ítems.
-   2. Datos de cliente y dirección de entrega.
-   3. Selección de medio de pago (Wompi, PSE, Contra Entrega).
-   4. Confirmación y comprobante con código de orden verificable.
+El tema está aplicado de manera unificada en todas las interfaces de la plataforma:
+1. **Catálogo y Vitrina (`StorefrontView`):** Fondos en `--color-canvas-mist`, tarjetas de productos en `--color-pure-white` con bordes `--color-faint-border` y botones de compra en `--color-shop-violet` con elevación `--shadow-lg-2`.
+2. **Navegación (`Navbar`):** Wordmark en `--color-ink-black`, enlaces activos con indicador `--color-shop-violet`, y botón de carrito con badges de conteo.
+3. **Flujo de Pago en 4 Pasos (`CheckoutView`):** Círculos activos del stepper en `--color-shop-violet`, pasos completados en `--color-violet-wash`, inputs con foco y sombra suave.
+4. **Comprobante Digital (`ReceiptView`):** Resumen transaccional con tipografía tabular para precios en COP, código de barras/código QR y botones de descarga.
+5. **Panel Administrativo (`AdminDashboardView`):** Tarjetas de KPIs financieros con `--shadow-sm`, tablas de productos y pedidos con división `--color-faint-border`.
+6. **Autenticación y Perfil (`AuthModal`, `ProfileView`, `CustomerOrdersView`):** Modales con backdrop desenfocado y controles ergonómicos adaptados a la nueva escala.

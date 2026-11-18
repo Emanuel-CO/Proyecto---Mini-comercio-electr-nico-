@@ -272,7 +272,7 @@ export default function App() {
   const totalCartUnits = cart.reduce((acc, item) => acc + item.cantidad, 0);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F172A]">
+    <div className="min-h-screen flex flex-col bg-[#f2f4f5] text-[#332f2d]">
       <Navbar
         route={route}
         user={user}
@@ -381,8 +381,8 @@ export default function App() {
         )}
       </div>
 
-      <footer className="no-print border-t border-[#E2E8F0] bg-white mt-14">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#64748B]">
+      <footer className="no-print border-t border-[#ebebeb] bg-white mt-14">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#787574]">
           <span>
             © {new Date().getFullYear()} Mercado Trust · Comercio Local Transaccional en Colombia
           </span>
