@@ -455,17 +455,17 @@ export function AdminDashboardView({
                 <button
                   type="button"
                   onClick={handleExportCSV}
-                  className="h-10 px-3.5 rounded-lg border border-[#E2E8F0] bg-white hover:bg-[#F1F5F9] text-xs font-semibold text-[#0F172A] inline-flex items-center gap-1.5 cursor-pointer"
+                  className="h-11 px-4 rounded-xl border border-[#ebebeb] bg-white hover:bg-[#f2f4f5] text-sm font-bold text-[#332f2d] inline-flex items-center gap-2 cursor-pointer shadow-xs transition-all"
                 >
-                  <Download className="w-3.5 h-3.5" />
+                  <Download className="w-4 h-4" />
                   CSV
                 </button>
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="h-10 px-3.5 rounded-lg bg-[#0F172A] hover:bg-[#1E293B] text-white text-xs font-semibold inline-flex items-center gap-1.5 cursor-pointer"
+                  className="h-11 px-4 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-sm font-bold inline-flex items-center gap-2 cursor-pointer shadow-md hover:shadow-lg transition-all"
                 >
-                  <Printer className="w-3.5 h-3.5" />
+                  <Printer className="w-4 h-4" />
                   Imprimir reporte
                 </button>
               </div>
@@ -821,7 +821,7 @@ export function AdminDashboardView({
               <button
                 type="button"
                 onClick={() => openProductModal()}
-                className="h-11 px-4 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold inline-flex items-center gap-2 cursor-pointer shrink-0"
+                className="h-11 px-5 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-sm font-bold inline-flex items-center gap-2 cursor-pointer shrink-0 shadow-md hover:shadow-lg active:scale-[0.98] transition-all"
               >
                 <Plus className="w-4 h-4" />
                 Nuevo producto
@@ -950,7 +950,7 @@ export function AdminDashboardView({
               <button
                 type="button"
                 onClick={() => openCategoryModal()}
-                className="h-11 px-4 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold inline-flex items-center gap-2 cursor-pointer shrink-0"
+                className="h-11 px-5 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-sm font-bold inline-flex items-center gap-2 cursor-pointer shrink-0 shadow-md hover:shadow-lg active:scale-[0.98] transition-all"
               >
                 <Plus className="w-4 h-4" />
                 Nueva categoría
@@ -1182,20 +1182,20 @@ export function AdminDashboardView({
                 </div>
               </div>
 
-              <div className="pt-3 flex justify-end gap-3 border-t border-[#E2E8F0]">
+              <div className="pt-3 flex justify-end gap-3 border-t border-[#ebebeb]">
                 <button
                   type="button"
                   onClick={() => setProductModalOpen(false)}
-                  className="h-11 px-4 rounded-lg border border-[#E2E8F0] text-sm font-semibold text-[#0F172A] cursor-pointer"
+                  className="h-12 px-5 rounded-xl border border-[#ebebeb] text-sm sm:text-base font-bold text-[#332f2d] hover:bg-[#f2f4f5] transition-all cursor-pointer"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={savingForm}
-                  className="h-11 px-5 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold inline-flex items-center gap-2 cursor-pointer"
+                  className="h-12 px-6 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-base font-bold inline-flex items-center gap-2.5 shadow-md hover:shadow-lg active:scale-[0.98] transition-all cursor-pointer"
                 >
-                  {savingForm && <Loader2 className="w-4 h-4 animate-spin" />}
+                  {savingForm && <Loader2 className="w-5 h-5 animate-spin" />}
                   <span>Guardar producto</span>
                 </button>
               </div>
@@ -1267,20 +1267,20 @@ export function AdminDashboardView({
                 </select>
               </div>
 
-              <div className="pt-3 flex justify-end gap-3 border-t border-[#E2E8F0]">
+              <div className="pt-3 flex justify-end gap-3 border-t border-[#ebebeb]">
                 <button
                   type="button"
                   onClick={() => setCategoryModalOpen(false)}
-                  className="h-11 px-4 rounded-lg border border-[#E2E8F0] text-sm font-semibold text-[#0F172A] cursor-pointer"
+                  className="h-12 px-5 rounded-xl border border-[#ebebeb] text-sm sm:text-base font-bold text-[#332f2d] hover:bg-[#f2f4f5] transition-all cursor-pointer"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={savingForm}
-                  className="h-11 px-5 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold inline-flex items-center gap-2 cursor-pointer"
+                  className="h-12 px-6 rounded-xl bg-[#5433eb] hover:bg-[#4524db] text-white text-base font-bold inline-flex items-center gap-2.5 shadow-md hover:shadow-lg active:scale-[0.98] transition-all cursor-pointer"
                 >
-                  {savingForm && <Loader2 className="w-4 h-4 animate-spin" />}
+                  {savingForm && <Loader2 className="w-5 h-5 animate-spin" />}
                   <span>Guardar categoría</span>
                 </button>
               </div>

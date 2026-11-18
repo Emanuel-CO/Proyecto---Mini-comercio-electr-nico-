@@ -184,3 +184,16 @@ textarea:focus {
   font-variant-numeric: tabular-nums;
   font-family: var(--font-gt-standard);
 }
+
+/* Ergonomic Button Touch Targets & Smooth Hover Interactions */
+button,
+a[role="button"] {
+  font-family: var(--font-shopify-sans);
+  touch-action: manipulation;
+}
+
+button:not(:disabled),
+a[role="button"] {
+  cursor: pointer;
+}
+
