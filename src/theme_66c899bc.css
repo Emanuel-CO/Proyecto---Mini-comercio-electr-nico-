@@ -1,0 +1,131 @@
+/**
+ * Mercado Trust Theme Stylesheet (theme_66c899bc.css)
+ * Identificador: theme_66c899bc
+ * Basado en: DESIGN_a3de63fa.md
+ */
+
+:root {
+  /* Paleta Primaria - Confianza Comercial y Estado */
+  --color-primary: #006948;
+  --color-primary-hover: #047857;
+  --color-primary-light: #059669;
+  --color-primary-container: #d1fae5;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #065f46;
+
+  /* Paleta Secundaria y Fondo */
+  --color-secondary: #0f172a;
+  --color-secondary-hover: #1e293b;
+  --color-on-secondary: #ffffff;
+  --color-tertiary: #0051d5;
+  --color-tertiary-light: #2563eb;
+
+  /* Superficies y Canvas */
+  --color-surface: #f8fafc;
+  --color-surface-card: #ffffff;
+  --color-surface-alt: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-focus: #059669;
+
+  /* Textos */
+  --color-text-main: #0f172a;
+  --color-text-muted: #64748b;
+  --color-text-subtle: #94a3b8;
+
+  /* Estados de Stock e Inventario */
+  --color-stock-available: #059669;
+  --color-stock-available-bg: #d1fae5;
+  --color-stock-available-border: #a7f3d0;
+
+  --color-stock-low: #d97706;
+  --color-stock-low-bg: #fef3c7;
+  --color-stock-low-border: #fde68a;
+
+  --color-stock-out: #dc2626;
+  --color-stock-out-bg: #fee2e2;
+  --color-stock-out-border: #fecaca;
+
+  /* Tipografía */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Radios */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Elevaciones / Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.06);
+}
+
+/* Tipografía de Moneda Tabular (COP) */
+.tabular-nums,
+[data-currency] {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-sans);
+}
+
+/* Clases de Componentes del Tema */
+.theme-card {
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.theme-btn-primary {
+  background-color: var(--color-primary-light);
+  color: var(--color-on-primary);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  padding: 0.625rem 1.25rem;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.theme-btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.theme-badge-available {
+  background-color: var(--color-stock-available-bg);
+  color: var(--color-stock-available);
+  border: 1px solid var(--color-stock-available-border);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.6rem;
+}
+
+.theme-badge-low {
+  background-color: var(--color-stock-low-bg);
+  color: var(--color-stock-low);
+  border: 1px solid var(--color-stock-low-border);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.6rem;
+}
+
+.theme-badge-out {
+  background-color: var(--color-stock-out-bg);
+  color: var(--color-stock-out);
+  border: 1px solid var(--color-stock-out-border);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.6rem;
+}
