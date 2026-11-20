@@ -3,9 +3,14 @@ package com.mercadotrust.backend.controller;
 import com.mercadotrust.backend.dto.ProductoDto;
 import com.mercadotrust.backend.entity.Categoria;
 import com.mercadotrust.backend.entity.Producto;
+import com.mercadotrust.backend.exception.ConflictException;
+import com.mercadotrust.backend.exception.RecursoDuplicadoException;
+import com.mercadotrust.backend.exception.ResourceNotFoundException;
 import com.mercadotrust.backend.repository.CategoriaRepository;
+import com.mercadotrust.backend.repository.DetallePedidoRepository;
 import com.mercadotrust.backend.repository.ProductoRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -15,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,10 +29,16 @@ public class ProductoController {
 
     private final ProductoRepository productoRepository;
     private final CategoriaRepository categoriaRepository;
+    private final DetallePedidoRepository detallePedidoRepository;
 
-    public ProductoController(ProductoRepository productoRepository, CategoriaRepository categoriaRepository) {
+    public ProductoController(
+            ProductoRepository productoRepository,
+            CategoriaRepository categoriaRepository,
+            DetallePedidoRepository detallePedidoRepository
+    ) {
         this.productoRepository = productoRepository;
         this.categoriaRepository = categoriaRepository;
+        this.detallePedidoRepository = detallePedidoRepository;
     }
 
     @GetMapping
@@ -50,13 +60,10 @@ public class ProductoController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Obtener detalle de un producto por ID (Público)")
-    public ResponseEntity<?> obtenerProducto(@PathVariable Integer id) {
-        Optional<Producto> opt = productoRepository.findById(id);
-        if (opt.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("error", "Producto no encontrado"));
-        }
-        return ResponseEntity.ok(mapToDto(opt.get()));
+    public ResponseEntity<ProductoDto> obtenerProducto(@PathVariable Integer id) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con ID: " + id));
+        return ResponseEntity.ok(mapToDto(producto));
     }
 
     @GetMapping("/categorias")
@@ -67,17 +74,14 @@ public class ProductoController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "BearerAuth")
     @Operation(summary = "Crear nuevo producto (Exclusivo Administrador)")
-    public ResponseEntity<?> crearProducto(@Valid @RequestBody ProductoDto dto) {
+    public ResponseEntity<ProductoDto> crearProducto(@Valid @RequestBody ProductoDto dto) {
         Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
-                .orElse(null);
-
-        if (categoria == null) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Categoría no encontrada"));
-        }
+                .orElseThrow(() -> new ResourceNotFoundException("Categoría no encontrada con ID: " + dto.getCategoriaId()));
 
         if (productoRepository.findBySku(dto.getSku()).isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Ya existe un producto con el SKU: " + dto.getSku()));
+            throw new RecursoDuplicadoException("Ya existe un producto con el SKU: " + dto.getSku());
         }
 
         Producto producto = new Producto();
@@ -96,17 +100,21 @@ public class ProductoController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "BearerAuth")
     @Operation(summary = "Actualizar producto existente (Exclusivo Administrador)")
-    public ResponseEntity<?> actualizarProducto(@PathVariable Integer id, @Valid @RequestBody ProductoDto dto) {
-        Producto producto = productoRepository.findById(id).orElse(null);
-        if (producto == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Producto no encontrado"));
-        }
+    public ResponseEntity<ProductoDto> actualizarProducto(@PathVariable Integer id, @Valid @RequestBody ProductoDto dto) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con ID: " + id));
 
-        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId()).orElse(null);
-        if (categoria == null) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Categoría no encontrada"));
-        }
+        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                .orElseThrow(() -> new ResourceNotFoundException("Categoría no encontrada con ID: " + dto.getCategoriaId()));
+
+        // Verificar si el SKU fue modificado y ya pertenece a otro producto
+        productoRepository.findBySku(dto.getSku()).ifPresent(existente -> {
+            if (!existente.getId().equals(id)) {
+                throw new RecursoDuplicadoException("Ya existe otro producto con el SKU: " + dto.getSku());
+            }
+        });
 
         producto.setCategoria(categoria);
         producto.setNombre(dto.getNombre());
@@ -124,15 +132,19 @@ public class ProductoController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Desactivar/eliminar producto (Exclusivo Administrador)")
+    @SecurityRequirement(name = "BearerAuth")
+    @Operation(summary = "Eliminar o desactivar producto (Exclusivo Administrador)")
     public ResponseEntity<?> eliminarProducto(@PathVariable Integer id) {
-        Optional<Producto> opt = productoRepository.findById(id);
-        if (opt.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Producto no encontrado"));
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con ID: " + id));
+
+        // Validación de conflicto: no se permite eliminar producto con órdenes asociadas
+        if (detallePedidoRepository.existsByProductoId(id)) {
+            throw new ConflictException("No se puede eliminar el producto '" + producto.getNombre() + "' porque tiene órdenes de compra asociadas en el historial. Puede marcarlo como INACTIVO.");
         }
-        Producto p = opt.get();
-        p.setEstado("INACTIVO");
-        productoRepository.save(p);
+
+        producto.setEstado("INACTIVO");
+        productoRepository.save(producto);
         return ResponseEntity.ok(Map.of("mensaje", "Producto marcado como inactivo"));
     }
 

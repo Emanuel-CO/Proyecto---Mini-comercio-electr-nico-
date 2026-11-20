@@ -1,0 +1,205 @@
+### ============================================================================
+### Mercado Trust - Suite de Pruebas de API HTTP (Sprint 2)
+### Servidor Base: http://localhost:8080
+### ============================================================================
+
+@baseUrl = http://localhost:8080
+
+### 1. RECHAZO DE ACCESO SIN TOKEN (Debe retornar 401 Unauthorized)
+GET {{baseUrl}}/api/clientes/perfil
+Accept: application/json
+
+### 2. RECHAZO DE ACCESO SIN TOKEN A ÓRDENES (Debe retornar 401 Unauthorized)
+GET {{baseUrl}}/api/ordenes/mis-ordenes
+Accept: application/json
+
+### 3. ERROR DE VALIDACIÓN EN REGISTRO (400 Bad Request por campos vacíos)
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombresCompletos": "",
+  "correo": "correo-invalido",
+  "password": ""
+}
+
+### 4. REGISTRO DE NUEVO CLIENTE (201 Created)
+# @name registroCliente
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombresCompletos": "Ana Martinez",
+  "correo": "ana.martinez@mercadotrust.co",
+  "password": "Password2026*",
+  "telefono": "3109876543",
+  "direccionEnvio": "Carrera 7 # 72-10, Bogota",
+  "rol": "CLIENTE",
+  "aceptaPoliticaDatos": true
+}
+
+### 5. CONFLICTO DE CORREO DUPLICADO (409 Conflict)
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombresCompletos": "Ana Martinez Duplicada",
+  "correo": "ana.martinez@mercadotrust.co",
+  "password": "Password2026*",
+  "telefono": "3109876543",
+  "direccionEnvio": "Carrera 7 # 72-10, Bogota",
+  "rol": "CLIENTE",
+  "aceptaPoliticaDatos": true
+}
+
+### 6. LOGIN EXITOSO Y OBTENCIÓN DE TOKEN JWT (200 OK)
+# @name loginCliente
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "correo": "ana.martinez@mercadotrust.co",
+  "password": "Password2026*"
+}
+
+### 7. LOGIN CON CREDENCIALES INVÁLIDAS (401 Unauthorized)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "correo": "ana.martinez@mercadotrust.co",
+  "password": "PasswordErronea!"
+}
+
+### 8. CONSULTA DE PERFIL AUTENTICADO (200 OK con Bearer Token)
+@clienteToken = {{loginCliente.response.body.token}}
+GET {{baseUrl}}/api/clientes/perfil
+Authorization: Bearer {{clienteToken}}
+Accept: application/json
+
+### 9. CONSULTAR CATÁLOGO DE PRODUCTOS (Público - 200 OK)
+GET {{baseUrl}}/api/productos
+Accept: application/json
+
+### 10. CONSULTAR PRODUCTO EXISTENTE POR ID (Público - 200 OK)
+GET {{baseUrl}}/api/productos/1
+Accept: application/json
+
+### 11. CONSULTAR PRODUCTO INEXISTENTE (404 Not Found)
+GET {{baseUrl}}/api/productos/99999
+Accept: application/json
+
+### 12. CÁLCULO DE CARRITO CON STOCK Y ENVÍO GRATIS (200 OK)
+POST {{baseUrl}}/api/carrito/calcular
+Authorization: Bearer {{clienteToken}}
+Content-Type: application/json
+
+[
+  {
+    "productoId": 1,
+    "cantidad": 2
+  },
+  {
+    "productoId": 3,
+    "cantidad": 1
+  }
+]
+
+### 13. REGISTRO Y LOGIN DE USUARIO ADMINISTRADOR
+# @name registroAdmin
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombresCompletos": "Super Admin Mercado",
+  "correo": "admin@mercadotrust.co",
+  "password": "AdminSecret2026*",
+  "telefono": "3000000000",
+  "direccionEnvio": "Oficinas Centrales",
+  "rol": "ADMIN",
+  "aceptaPoliticaDatos": true
+}
+
+### 14. LOGIN ADMIN
+# @name loginAdmin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "correo": "admin@mercadotrust.co",
+  "password": "AdminSecret2026*"
+}
+
+@adminToken = {{loginAdmin.response.body.token}}
+
+### 15. CREAR NUEVO PRODUCTO COMO ADMIN (CRUD - 201 Created)
+# @name crearProducto
+POST {{baseUrl}}/api/productos
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "categoriaId": 1,
+  "sku": "CAF-PRUEBA-001",
+  "nombre": "Café Geisha Edición Especial 250g",
+  "descripcion": "Lote seleccionado con notas florales y frutales",
+  "precio": 52000.00,
+  "stock": 15,
+  "imagenUrl": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e",
+  "estado": "ACTIVO"
+}
+
+### 16. ACTUALIZAR PRODUCTO COMO ADMIN (CRUD - 200 OK)
+@nuevoProductoId = {{crearProducto.response.body.id}}
+PUT {{baseUrl}}/api/productos/{{nuevoProductoId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "categoriaId": 1,
+  "sku": "CAF-PRUEBA-001",
+  "nombre": "Café Geisha Edición Especial 250g (Actualizado)",
+  "descripcion": "Lote exclusivo finca La Esperanza",
+  "precio": 54000.00,
+  "stock": 12,
+  "imagenUrl": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e",
+  "estado": "ACTIVO"
+}
+
+### 17. CREACIÓN DE ORDEN CON DESCUENTO DE STOCK (201 Created)
+POST {{baseUrl}}/api/ordenes
+Authorization: Bearer {{clienteToken}}
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "productoId": 1,
+      "cantidad": 1
+    }
+  ],
+  "direccionEntrega": "Carrera 7 # 72-10, Bogota",
+  "telefonoContacto": "3109876543",
+  "metodoPago": "CONTRAENTREGA"
+}
+
+### 18. CONFLICTO POR STOCK INSUFICIENTE (409 Conflict)
+POST {{baseUrl}}/api/ordenes
+Authorization: Bearer {{clienteToken}}
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "productoId": 1,
+      "cantidad": 9999
+    }
+  ],
+  "direccionEntrega": "Carrera 7 # 72-10, Bogota",
+  "telefonoContacto": "3109876543",
+  "metodoPago": "CONTRAENTREGA"
+}
+
+### 19. CONFLICTO AL INTENTAR ELIMINAR PRODUCTO CON ÓRDENES (409 Conflict)
+DELETE {{baseUrl}}/api/productos/1
+Authorization: Bearer {{adminToken}}

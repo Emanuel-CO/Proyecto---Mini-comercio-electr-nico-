@@ -52,8 +52,9 @@ public class AuthController {
     @Operation(summary = "Registrar nuevo cliente en la plataforma")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         if (usuarioRepository.existsByCorreo(request.getCorreo())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "Ya existe un usuario registrado con este correo"));
+            throw new com.mercadotrust.backend.exception.RecursoDuplicadoException(
+                    "Ya existe un usuario registrado con el correo: " + request.getCorreo()
+            );
         }
 
         Usuario usuario = new Usuario();
@@ -87,17 +88,12 @@ public class AuthController {
     @PostMapping("/login")
     @Operation(summary = "Iniciar sesión y obtener token JWT")
     public ResponseEntity<?> login(@Valid @RequestBody AuthRequest request) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getCorreo().trim().toLowerCase(), request.getPassword())
-            );
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", "Credenciales inválidas. Correo o contraseña incorrectos."));
-        }
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getCorreo().trim().toLowerCase(), request.getPassword())
+        );
 
         Usuario usuario = usuarioRepository.findByCorreo(request.getCorreo().trim().toLowerCase())
-                .orElseThrow();
+                .orElseThrow(() -> new com.mercadotrust.backend.exception.ResourceNotFoundException("Usuario no encontrado"));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(usuario.getCorreo());
         String token = jwtService.generateToken(userDetails, usuario.getRol(), usuario.getId());

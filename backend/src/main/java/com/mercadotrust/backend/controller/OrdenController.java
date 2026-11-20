@@ -6,6 +6,8 @@ import com.mercadotrust.backend.entity.DetallePedido;
 import com.mercadotrust.backend.entity.Pedido;
 import com.mercadotrust.backend.entity.Producto;
 import com.mercadotrust.backend.entity.Usuario;
+import com.mercadotrust.backend.exception.ResourceNotFoundException;
+import com.mercadotrust.backend.exception.StockInsuficienteException;
 import com.mercadotrust.backend.repository.PedidoRepository;
 import com.mercadotrust.backend.repository.ProductoRepository;
 import com.mercadotrust.backend.repository.UsuarioRepository;
@@ -15,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +28,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -60,10 +62,10 @@ public class OrdenController {
     ) {
         String correo = authentication.getName();
         Usuario usuario = usuarioRepository.findByCorreo(correo)
-                .orElseThrow(() -> new RuntimeException("Usuario no autenticado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no autenticado"));
 
         if (dto.getItems() == null || dto.getItems().isEmpty()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "El carrito no contiene productos"));
+            throw new IllegalArgumentException("El carrito no contiene productos");
         }
 
         Pedido pedido = new Pedido();
@@ -82,14 +84,13 @@ public class OrdenController {
 
         for (CarritoItemDto itemDto : dto.getItems()) {
             Producto producto = productoRepository.findById(itemDto.getProductoId())
-                    .orElseThrow(() -> new RuntimeException("Producto con ID " + itemDto.getProductoId() + " no encontrado"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Producto con ID " + itemDto.getProductoId() + " no encontrado"));
 
             if (producto.getStock() < itemDto.getCantidad()) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of(
-                        "error", "Stock insuficiente para el producto: " + producto.getNombre(),
-                        "stockDisponible", producto.getStock(),
-                        "cantidadSolicitada", itemDto.getCantidad()
-                ));
+                throw new StockInsuficienteException(
+                        "Stock insuficiente para el producto '" + producto.getNombre() +
+                        "'. Disponibles: " + producto.getStock() + ", Solicitados: " + itemDto.getCantidad()
+                );
             }
 
             // Descontar inventario
@@ -138,7 +139,7 @@ public class OrdenController {
     public ResponseEntity<List<Pedido>> obtenerMisOrdenes(Authentication authentication) {
         String correo = authentication.getName();
         Usuario usuario = usuarioRepository.findByCorreo(correo)
-                .orElseThrow(() -> new RuntimeException("Usuario no autenticado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no autenticado"));
 
         List<Pedido> ordenes = pedidoRepository.findByUsuarioIdOrderByCreatedAtDesc(usuario.getId());
         return ResponseEntity.ok(ordenes);
@@ -148,18 +149,15 @@ public class OrdenController {
     @PreAuthorize("hasAnyRole('CLIENTE', 'ADMIN')")
     @Operation(summary = "Detalle completo de una orden por ID")
     public ResponseEntity<?> obtenerOrdenPorId(@PathVariable Integer id, Authentication authentication) {
-        Optional<Pedido> pedidoOpt = pedidoRepository.findById(id);
-        if (pedidoOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Orden no encontrada con ID: " + id));
 
-        Pedido pedido = pedidoOpt.get();
         String correo = authentication.getName();
         boolean esAdmin = authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
         if (!esAdmin && !pedido.getUsuario().getCorreo().equalsIgnoreCase(correo)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", "No tiene permisos para ver esta orden"));
+            throw new AccessDeniedException("No tiene permisos para ver esta orden");
         }
 
         return ResponseEntity.ok(pedido);
@@ -180,12 +178,9 @@ public class OrdenController {
             @PathVariable Integer id,
             @RequestParam String estado
     ) {
-        Optional<Pedido> pedidoOpt = pedidoRepository.findById(id);
-        if (pedidoOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Orden no encontrada con ID: " + id));
 
-        Pedido pedido = pedidoOpt.get();
         String estadoAnterior = pedido.getEstado();
         String nuevoEstado = estado.toUpperCase();
         pedido.setEstado(nuevoEstado);
