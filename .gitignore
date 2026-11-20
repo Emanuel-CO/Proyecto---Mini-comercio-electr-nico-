@@ -7,3 +7,7 @@ coverage/
 .env*
 !.env.example
 data/
+target/
+backend/target/
+backend/.tools/
+.tools/
