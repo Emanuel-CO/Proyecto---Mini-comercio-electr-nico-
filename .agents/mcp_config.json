@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "ecc-memory": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\Acer\\OneDrive\\Documentos\\Proyecto - Mini comercio electronico\\Proyecto---Mini-comercio-electr-nico-\\.agents\\scripts\\memory-mcp.mjs"
+      ],
+      "env": {
+        "ECC_MEMORY_HARNESS": "antigravity"
+      }
+    }
+  }
+}
